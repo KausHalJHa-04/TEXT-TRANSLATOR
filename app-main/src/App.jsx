@@ -1,14 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
-import "./App.css";
 import { Loader } from 'lucide-react';
+
+import "./App.css";
 
 function App() {
   const [textInput, setTextInput] = useState("");
   const [selectValue, setSelectValue] = useState("");
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
-
 
   const handleTextTranslation = async () => {
     setLoading(true)
@@ -39,29 +39,34 @@ function App() {
   };
 
   return (
-    <div className="h-screen w-screen bg-slate-200 flex items-center justify-center">
-      <div className="flex items-center justify-center flex-col gap-y-10">
-        <h1 className=" text-3xl text-zinc-700 font-bold ">Text Translator</h1>
+    <div className="app-root">
+      <div className="card">
+        <h1 className="title">Text Translator</h1>
 
-        <div className="flex items-center justify-center flex-col gap-y-5">
+        <div className="textareas">
           <textarea
             name="input-text"
-            className="bg-white h-30 w-[500px] border border-slate-700 outline-none rounded-lg text-lg px-2 py-2"
+            className="input-text"
+            placeholder="Enter text in English..."
             onChange={(e) => setTextInput(e.target.value)}
+            value={textInput}
           ></textarea>
           <textarea
-            name="input-text"
-            className="bg-white h-30 w-[500px] border border-slate-700 outline-none rounded-lg text-lg px-2 py-2"
-            value={result} readOnly
+            name="output-text"
+            className="output-text"
+            placeholder="Translation will appear here"
+            value={result}
+            readOnly
           ></textarea>
         </div>
 
-        <div>
-          <label htmlFor="options">Converted Into: </label>
+        <div className="controls">
+          <label htmlFor="options" className="label">Converted Into:</label>
           <select
             name="value"
-            className="bg-black text-white px-2 py-1 rounded-lg border border-zinc-700 outline-none cursor-pointer"
+            className="select"
             onChange={(e) => setSelectValue(e.target.value)}
+            value={selectValue}
           >
             <option value="">Select</option>
             <option value="sa">Sanskrit</option>
@@ -80,15 +85,11 @@ function App() {
             <option value="as">Assamese</option>
             <option value="ne">Nepali</option>
             <option value="ru">Russian</option>
-            
           </select>
         </div>
 
-        <button className="bg-slate-700 text-slate-100 mx-auto w-[500px] py-2 rounded-lg cursor-pointer flex items-center justify-center" onClick={handleTextTranslation}>
-          {
-            loading ? (<Loader className="animate-spin"/>) : "Translate"
-          }
-          
+        <button className="btn translate-btn" onClick={handleTextTranslation}>
+          {loading ? (<Loader className="loader"/>) : "Translate"}
         </button>
       </div>
     </div>
